@@ -1,6 +1,8 @@
 package com.example.playtomictonyaymane
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -8,6 +10,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.playtomictonyaymane.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +20,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // redirect to auth activity if user is not logged in
+        AuthData.auth = Firebase.auth
+
+        // TESTING
+        AuthData.auth.signOut()
+
+        val currentUser = AuthData.auth.currentUser
+        if(currentUser == null){
+            Log.v("Auth", "User not logged in, redirecting to auth")
+            startActivity(Intent(this@MainActivity, AuthActivity::class.java))
+            finish()
+        }
+        Log.v("Auth", "User already logged in as $currentUser")
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
