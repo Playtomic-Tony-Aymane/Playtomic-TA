@@ -13,7 +13,6 @@ class ViewPagerAdapter(fragmentManager: NotificationsFragment) : FragmentStateAd
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> ActivitiesFragment()
-            1 -> PostsFragment()
             else -> throw IllegalStateException("Invalid position")
         }
     }

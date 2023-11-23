@@ -10,4 +10,9 @@ class NotificationsViewModel : ViewModel() {
         value = "Profile"
     }
     val text: LiveData<String> = _text
+    var firstName: String = ""
+    var lastName: String = ""
+    var location : String = ""
+    var prefrence: String = ""
+
 }

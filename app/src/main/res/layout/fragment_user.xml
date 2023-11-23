@@ -19,7 +19,7 @@
         android:layout_width="73dp"
         android:layout_height="77dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/user_solid"
         app:layout_constraintEnd_toStartOf="@id/userInfo"
         app:layout_constraintHorizontal_bias="0.03"
@@ -52,6 +52,13 @@
             android:layout_height="wrap_content"
             android:text="User's Location"
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/prefrence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User's Location"
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -63,6 +70,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userInfo">
+
 
         <TextView
             android:id="@+id/textMatches"
@@ -115,22 +123,22 @@
         app:layout_constraintVertical_bias="0.168"
         />
 
+
+    <!-- TabLayout -->
     <Button
         android:id="@+id/button_prem"
         android:layout_width="188dp"
         android:layout_height="45dp"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/radiusbutton"
-        android:text="Go Premium"
+        android:text="Sign Out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userInfo"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.155" />
 
-
-    <!-- TabLayout -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
@@ -143,13 +151,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Activities" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Posts" />
-
-        <!-- Voeg meer TabItems toe voor extra tabs -->
     </com.google.android.material.tabs.TabLayout>
 
     <!-- ViewPager -->

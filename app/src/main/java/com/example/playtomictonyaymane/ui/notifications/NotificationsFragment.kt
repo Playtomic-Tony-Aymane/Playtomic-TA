@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentUserBinding
 import com.example.playtomictonyaymane.ui.editProfile.EditProfile
 import com.example.playtomictonyaymane.ui.gopremium.GoPremuimFragment
+import com.example.playtomictonyaymane.ui.tabs.RecyclerAdapter
 import com.example.playtomictonyaymane.ui.tabs.ViewPagerAdapter
+//import com.example.playtomictonyaymane.ui.tabs.ViewPagerAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -23,6 +27,9 @@ class NotificationsFragment : Fragment() {
 
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
+
+    val userProfileViewModel: NotificationsViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,11 +77,19 @@ class NotificationsFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Activities"
-                1 -> "Posts"
                 else -> null
             }
         }.attach()
+
+
+
+
+
+        binding.userName.text = "${userProfileViewModel.firstName} ${userProfileViewModel.lastName}"
+        binding.userLocation.text = userProfileViewModel.location
+        binding.prefrence.text = userProfileViewModel.prefrence
     }
+
 
 
     override fun onDestroyView() {

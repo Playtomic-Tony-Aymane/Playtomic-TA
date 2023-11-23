@@ -5,21 +5,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import com.example.playtomictonyaymane.databinding.FragmentDiscoveryBinding
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentEditprofileBinding
-import com.example.playtomictonyaymane.databinding.FragmentGopremiumBinding
-import com.example.playtomictonyaymane.ui.dashboard.DashboardViewModel
+import com.example.playtomictonyaymane.ui.notifications.NotificationsViewModel
 
 class EditProfile: Fragment() {
+
+    private lateinit var userProfileViewModel: NotificationsViewModel
     private var  _binding: FragmentEditprofileBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -42,6 +43,21 @@ class EditProfile: Fragment() {
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Profile"
             setDisplayHomeAsUpEnabled(true)
+
+            val userProfileViewModel: NotificationsViewModel by activityViewModels()
+
+            binding.buttonSaveProfile.setOnClickListener{
+                userProfileViewModel.apply {
+                     firstName = binding.editTextFirstName.text.toString()
+                     lastName = binding.editTextLastName.text.toString()
+                     location = binding.editTextLocation.text.toString()
+                     prefrence = binding.editTextPrefrence.text.toString()
+                }
+                findNavController().navigateUp()
+            }
+
+
+
 
 
         }
