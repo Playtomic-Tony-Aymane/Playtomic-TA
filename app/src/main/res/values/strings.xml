@@ -5,4 +5,8 @@
     <string name="title_home">Home</string>
     <string name="title_user">Profile</string>
 
+    <string name="auth_request_email">Enter your email address:</string>
+    <string name="auth_request_password_title">Title</string>
+    <string name="auth_request_password">Text</string>
+    <string name="auth_continue">Continue</string>
 </resources>
