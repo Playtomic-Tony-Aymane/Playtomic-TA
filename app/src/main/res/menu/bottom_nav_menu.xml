@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_play"
+        android:icon="@drawable/tennis_ball_svgrepo_com"
+        android:title="@string/title_play" />
+
+    <item
+        android:id="@+id/navigation_discovery"
+        android:icon="@drawable/radar"
+        android:title="@string/title_discovery" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+
+    <item
+        android:id="@+id/navigation_user"
+        android:icon="@drawable/user_solid"
+        android:title="@string/title_user" />
+
+</menu>

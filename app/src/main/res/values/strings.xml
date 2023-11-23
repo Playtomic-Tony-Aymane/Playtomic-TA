@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PlaytomicTony&amp;Aymane</string>
+    <string name="title_play">Play</string>
+    <string name="title_discovery">Discovery</string>
+    <string name="title_home">Home</string>
+    <string name="title_user">Profile</string>
+
+</resources>
