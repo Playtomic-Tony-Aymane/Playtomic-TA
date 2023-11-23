@@ -1,21 +1,21 @@
 package com.example.playtomictonyaymane.ui.editProfile
 
-import android.app.Activity
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NavUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.playtomictonyaymane.databinding.FragmentDiscoveryBinding
+import androidx.navigation.fragment.NavHostFragment
 import com.example.playtomictonyaymane.databinding.FragmentEditprofileBinding
-import com.example.playtomictonyaymane.databinding.FragmentGopremiumBinding
-import com.example.playtomictonyaymane.ui.dashboard.DashboardViewModel
 
-class EditProfile: Fragment() {
+
+class EditProfileFragment: Fragment() {
     private var  _binding: FragmentEditprofileBinding? = null
 
     // This property is only valid between onCreateView and
@@ -41,14 +41,24 @@ class EditProfile: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Profile"
-            setDisplayHomeAsUpEnabled(true)
+            // the button doesn't work yet
+            //setDisplayHomeAsUpEnabled(true)
 
 
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-           requireActivity().supportFragmentManager.popBackStackImmediate("FragmentUserBinding",0)
+            val navHostFragment =
+                requireActivity().supportFragmentManager.findFragmentById(com.example.playtomictonyaymane.R.id.nav_host_fragment_activity_main) as NavHostFragment
+            val navController = navHostFragment.navController
+            //navController.navigate(com.example.playtomictonyaymane.R.id.action_navigation_user_to_editProfileFragment)
+            navController.popBackStack()
         }
+
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+//            //requireActivity().supportFragmentManager.popBackStackImmediate("UserProfile", 0)
+//            //requireActivity().supportFragmentManager.popBackStackImmediate()
+//        }
     }
 
     override fun onDestroyView() {

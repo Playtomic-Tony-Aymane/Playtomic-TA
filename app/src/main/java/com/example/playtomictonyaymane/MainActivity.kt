@@ -3,6 +3,7 @@ package com.example.playtomictonyaymane
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -56,5 +57,12 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    fun signOut() {
+        Log.v("Auth", "User has logged out, returning to auth")
+        AuthData.auth.signOut()
+        startActivity(Intent(this@MainActivity, AuthActivity::class.java))
+        finish()
     }
 }

@@ -9,4 +9,5 @@
     <string name="auth_request_password_title">Title</string>
     <string name="auth_request_password">Text</string>
     <string name="auth_continue">Continue</string>
+    <string name="sign_out">Sign out</string>
 </resources>
