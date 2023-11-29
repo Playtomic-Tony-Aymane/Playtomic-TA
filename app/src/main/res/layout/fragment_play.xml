@@ -1,114 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/appBar"
+    android:layout_above="@+id/bottom_navigation">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:title="PlayTomic"
-        android:titleTextColor="@android:color/white"
-        app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-
-
-    <ImageView
-        android:id="@+id/chatIcon"
-        android:layout_width="35dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/chat_svgrepo_com"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/appBar" />
-
-    <ImageView
-        android:id="@+id/notificationIcon"
-        android:layout_width="34dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:src="@drawable/notification_bell"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/appBar" />
-
-    <TextView
-        android:id="@+id/findMatchText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Find your perfect match"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/appBar"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
-
-
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:rowCount="2"
-        app:layout_constraintTop_toBottomOf="@id/findMatchText"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
-
-        <Button
-            android:id="@+id/bookcourtButton"
-            android:layout_width="1dp"
+        <!-- Titel van de sectie -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:text="Book court" />
+            android:text="Pedal Game"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
 
-        <Button
-            android:id="@+id/playOpenMatchButton"
-            android:layout_width="21dp"
+        <!-- Invoervelden voor het spel -->
+        <EditText
+            android:id="@+id/editTextPlayerName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:text="Play an open match" />
+            android:layout_marginBottom="16dp"
+            android:hint="Enter Player Name" />
 
-        <Button
-            android:id="@+id/classesButton"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/editTextGameCode"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:text="Classes" />
+            android:hint="Enter Game Code"
+            android:layout_marginBottom="16dp"/>
 
-        <Button
-            android:id="@+id/competitionsButton"
-            android:layout_width="0dp"
+        <!-- Datumselectie -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Competitions"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_column="1" />
+            android:text="Select Date:"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
 
-    </GridLayout>
+        <!-- Tijdselectie -->
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/addMatchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="88dp"
-        android:text="Add a match"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Time:"
+            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TimePicker
+            android:id="@+id/timePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!-- Knop om het spel te starten -->
+        <Button
+            android:id="@+id/buttonStartGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Pedal Game"
+            android:background="@drawable/radiusbutton"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>
+
+<com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/bottom_navigation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="?android:attr/windowBackground"
+    app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

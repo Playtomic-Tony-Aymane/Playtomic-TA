@@ -30,6 +30,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         "pertanyaan 12", "pertanyaan 18", "pertanyaan 20",
         "pertanyaan 21")
 
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var itemKode: TextView
@@ -64,6 +65,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
+
         viewHolder.itemKode.text = kode[i]
         viewHolder.itemKategori.text = kategori[i]
         viewHolder.itemIsi.text = isi[i]
