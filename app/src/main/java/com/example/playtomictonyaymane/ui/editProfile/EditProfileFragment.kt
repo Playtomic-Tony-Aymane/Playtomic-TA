@@ -1,6 +1,5 @@
 package com.example.playtomictonyaymane.ui.editProfile
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -8,18 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NavUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.playtomictonyaymane.R
 import androidx.navigation.fragment.NavHostFragment
 import com.example.playtomictonyaymane.databinding.FragmentEditprofileBinding
 import com.example.playtomictonyaymane.ui.notifications.NotificationsViewModel
 
-class EditProfile: Fragment() {
+class EditProfileFragment: Fragment() {
 
     private lateinit var userProfileViewModel: NotificationsViewModel
     private var  _binding: FragmentEditprofileBinding? = null

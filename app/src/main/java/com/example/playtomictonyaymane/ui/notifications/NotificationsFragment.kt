@@ -6,17 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.playtomictonyaymane.MainActivity
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentUserBinding
-import com.example.playtomictonyaymane.ui.editProfile.EditProfile
-import com.example.playtomictonyaymane.ui.gopremium.GoPremuimFragment
-import com.example.playtomictonyaymane.ui.tabs.RecyclerAdapter
-import com.example.playtomictonyaymane.ui.editProfile.EditProfileFragment
 import com.example.playtomictonyaymane.ui.tabs.ViewPagerAdapter
 //import com.example.playtomictonyaymane.ui.tabs.ViewPagerAdapter
 import com.google.android.material.button.MaterialButton
@@ -66,8 +60,6 @@ class NotificationsFragment : Fragment() {
 //            transaction.replace(R.id.container, Editfragmet)
 //            //transaction.addToBackStack("UserProfile")
 //            transaction.commit()
-
-        }
 
         }
 
