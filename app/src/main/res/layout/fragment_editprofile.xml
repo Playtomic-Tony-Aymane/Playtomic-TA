@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.editProfile.EditProfile">
+    tools:context=".ui.editProfile.EditProfileFragment">
 
     <EditText
         android:id="@+id/editTextFirstName"
