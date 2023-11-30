@@ -17,7 +17,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pedal Game"
+            android:text="Padel Game"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"/>
@@ -69,7 +69,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:id="@+id/buttonStartGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Pedal Game"
+            android:text="Start Padel Game"
             android:background="@drawable/radiusbutton"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"/>

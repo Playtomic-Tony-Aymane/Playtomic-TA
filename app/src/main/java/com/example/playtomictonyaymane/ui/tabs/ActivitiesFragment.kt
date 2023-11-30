@@ -40,6 +40,8 @@ class ActivitiesFragment: Fragment(){
             transaction.replace(R.id.container, playFragment)
             transaction.addToBackStack(null)
             transaction.commit()
+
+
         }
     }
 

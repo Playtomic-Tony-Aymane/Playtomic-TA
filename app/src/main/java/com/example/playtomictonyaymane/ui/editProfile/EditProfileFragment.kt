@@ -1,12 +1,20 @@
 package com.example.playtomictonyaymane.ui.editProfile
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -14,13 +22,22 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.playtomictonyaymane.databinding.FragmentEditprofileBinding
 import com.example.playtomictonyaymane.ui.notifications.NotificationsViewModel
+import java.io.File
+import java.io.FileOutputStream
 
 class EditProfileFragment: Fragment() {
 
-    private lateinit var userProfileViewModel: NotificationsViewModel
     private var  _binding: FragmentEditprofileBinding? = null
-
     private val binding get() = _binding!!
+
+    private val getContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageUri = result.data?.data
+            if (imageUri != null) {
+                saveImageLocally(imageUri)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,9 +88,6 @@ class EditProfileFragment: Fragment() {
             }
 
 
-
-
-
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -82,8 +96,54 @@ class EditProfileFragment: Fragment() {
             val navController = navHostFragment.navController
             navController.popBackStack()
         }
-
+        binding.buttonChangePhoto.setOnClickListener {
+            checkGalleryPermissionAndOpen()
+        }
     }
+
+    private fun checkGalleryPermissionAndOpen() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_GALLERY_PERMISSION)
+        } else {
+            openGallery()
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        getContent.launch(Intent.createChooser(intent, "Select Picture"))
+    }
+
+    private fun saveImageLocally(imageUri: Uri) {
+        val inputStream = requireContext().contentResolver.openInputStream(imageUri)
+        val file = File(requireContext().filesDir, "selected_image.jpg")
+        val outputStream = FileOutputStream(file)
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream.close()
+
+        // Update de ImageView met de geselecteerde afbeelding
+        binding.imageViewProfile.setImageURI(Uri.fromFile(file))
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_GALLERY_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openGallery()
+            }
+        }
+    }
+
+    companion object {
+        private const val REQUEST_GALLERY_PERMISSION = 101
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
