@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentPlayBinding
+import com.example.playtomictonyaymane.ui.court.BookingCourtFragment
 import com.example.playtomictonyaymane.ui.dashboard.DashboardFragment
+import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
 import com.example.playtomictonyaymane.ui.tabs.ActivitiesFragment
 
 class PlayFragment: Fragment() {
@@ -34,55 +36,21 @@ class PlayFragment: Fragment() {
         val root: View = binding.root
 
 
+
         return root
     }
 
-    fun saveDataToList(
-        playerName: String,
-        gameCode: String,
-        year: Int,
-        month: Int,
-        day: Int,
-        hour: Int,
-        minute: Int
-    ) {
-        // Hier sla je de ontvangen gegevens op in een lijst, database, of waar je ze ook wilt bewaren
-        // Bijvoorbeeld:
-        val data = "$playerName - $gameCode - $year/$month/$day $hour:$minute"
-        // Voeg de data toe aan de lijst in je fragment
-        // data kan ook naar een adapter worden gestuurd om weer te geven in een RecyclerView
 
-        // Update de UI of voer andere acties uit met de ontvangen gegevens
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Zoek de button op basis van de ID
-        val buttonStartGame = view.findViewById<Button>(R.id.buttonStartGame)
-        val editTextPlayerName = view.findViewById<EditText>(R.id.editTextPlayerName)
-        val editTextGameCode = view.findViewById<EditText>(R.id.editTextGameCode)
-        val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
-        val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
+        binding.buttonAddCourt.setOnClickListener {
 
-        // Voeg een klikgebeurtenis toe aan de knop
-        buttonStartGame.setOnClickListener {
-            val playerName = editTextPlayerName.text.toString()
-            val gameCode = editTextGameCode.text.toString()
-            val year = datePicker.year
-            val month = datePicker.month
-            val day = datePicker.dayOfMonth
-
-            val hour = timePicker.hour
-            val minute = timePicker.minute
-
-            val db = DashboardFragment()
+            val addCourt = BookingCourtFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-
-            // Vervang het huidige fragment door PlayFragment
-            transaction.replace(R.id.container, db)
+            transaction.replace(R.id.container, addCourt)
             transaction.addToBackStack(null)
             transaction.commit()
-
         }
     }
 

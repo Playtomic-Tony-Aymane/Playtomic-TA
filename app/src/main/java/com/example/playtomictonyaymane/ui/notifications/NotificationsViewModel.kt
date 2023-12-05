@@ -15,4 +15,5 @@ class NotificationsViewModel : ViewModel() {
     var location : String = ""
     var prefrence: String = ""
 
+
 }

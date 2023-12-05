@@ -20,7 +20,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentEditprofileBinding
+import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
 import com.example.playtomictonyaymane.ui.notifications.NotificationsViewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -83,8 +85,15 @@ class EditProfileFragment: Fragment() {
                      lastName = binding.editTextLastName.text.toString()
                      location = binding.editTextLocation.text.toString()
                      prefrence = binding.editTextPrefrence.text.toString()
+
                 }
                 findNavController().navigateUp()
+                val userProdile = NotificationsFragment()
+                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.container, userProdile)
+                transaction.addToBackStack("UserProfile")
+                transaction.commit()
+
             }
 
 
