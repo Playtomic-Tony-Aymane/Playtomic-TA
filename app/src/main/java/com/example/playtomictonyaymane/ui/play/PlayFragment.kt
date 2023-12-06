@@ -5,12 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.DatePicker
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentPlayBinding
+import com.example.playtomictonyaymane.ui.court.BookingCourtFragment
+import com.example.playtomictonyaymane.ui.dashboard.DashboardFragment
+import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
+import com.example.playtomictonyaymane.ui.tabs.ActivitiesFragment
 
 class PlayFragment: Fragment() {
     private var _binding: FragmentPlayBinding? = null
@@ -31,31 +36,27 @@ class PlayFragment: Fragment() {
         val root: View = binding.root
 
 
+
         return root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Zoek de button op basis van de ID
-        val buttonStartGame = view.findViewById<Button>(R.id.buttonStartGame)
+        binding.buttonAddCourt.setOnClickListener {
 
-        // Zoek de DatePicker en TimePicker op basis van de ID's
-        val datePicker = view.findViewById<DatePicker>(R.id.datePicker)
-        val timePicker = view.findViewById<TimePicker>(R.id.timePicker)
-
-        // Voeg een klikgebeurtenis toe aan de knop
-        buttonStartGame.setOnClickListener {
-            // Verkrijg geselecteerde datum en tijd
-            val year = datePicker.year
-            val month = datePicker.month
-            val day = datePicker.dayOfMonth
-
-            val hour = timePicker.hour
-            val minute = timePicker.minute
-
+            val addCourt = BookingCourtFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, addCourt)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
     }
+
+
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

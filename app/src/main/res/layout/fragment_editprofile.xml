@@ -7,6 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.editProfile.EditProfileFragment">
 
+    <ImageView
+        android:id="@+id/imageViewProfile"
+        android:layout_width="102dp"
+        android:layout_height="89dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="312dp"
+        android:src="@drawable/user_solid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonChangePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="28dp"
+        android:text="Add Photo"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+        app:layout_constraintTop_toTopOf="@+id/imageViewProfile" />
+
     <EditText
         android:id="@+id/editTextFirstName"
         android:layout_width="0dp"
@@ -60,7 +80,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/edit_text_bg"
-        android:hint="LocatiPrefrence"
+        android:hint="Prefrence"
         android:padding="12dp"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,14 +92,15 @@
         android:id="@+id/buttonSaveProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="220dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/button_bg"
         android:text="Save"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPrefrence"/>
 
