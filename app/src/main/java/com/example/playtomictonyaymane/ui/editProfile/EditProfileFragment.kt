@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.playtomictonyaymane.R
@@ -72,10 +73,11 @@ class EditProfileFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Back button behavior
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Profile"
-            // the button doesn't work yet
-            setDisplayHomeAsUpEnabled(true)
+            setDisplayHomeAsUpEnabled(false)
 
             val userProfileViewModel: NotificationsViewModel by activityViewModels()
 
@@ -95,8 +97,6 @@ class EditProfileFragment: Fragment() {
                 transaction.commit()
 
             }
-
-
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -110,6 +110,33 @@ class EditProfileFragment: Fragment() {
         }
     }
 
+        val userProfileViewModel: NotificationsViewModel by activityViewModels()
+        binding.buttonSaveProfile.setOnClickListener{
+            userProfileViewModel.apply {
+                firstName = binding.editTextFirstName.text.toString()
+                lastName = binding.editTextLastName.text.toString()
+                location = binding.editTextLocation.text.toString()
+                prefrence = binding.editTextPrefrence.text.toString()
+
+                saveProfile()
+            }
+            //findNavController().navigateUp()
+            //parentFragmentManager.popBackStack()
+            //findNavController().navigate(R.id.action_navigation_editProfile_to_navigation_user)
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.editProfileFragment, true)
+                .build()
+
+            findNavController().navigate(R.id.navigation_user, null, navOptions)
+        }
+
+        // bindings
+        binding.editTextFirstName.setText(userProfileViewModel.firstName)
+        binding.editTextLastName.setText(userProfileViewModel.lastName)
+        binding.editTextLocation.setText(userProfileViewModel.location)
+        binding.editTextPrefrence.setText(userProfileViewModel.prefrence)
+    }
+    
     private fun checkGalleryPermissionAndOpen() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
