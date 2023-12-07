@@ -8,8 +8,10 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.TimePicker
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentPlayBinding
 import com.example.playtomictonyaymane.ui.court.BookingCourtFragment
@@ -44,13 +46,21 @@ class PlayFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val actionBar = (activity as AppCompatActivity?)?.supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(false)
+
         binding.buttonAddCourt.setOnClickListener {
 
-            val addCourt = BookingCourtFragment()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, addCourt)
-            transaction.addToBackStack(null)
-            transaction.commit()
+//            val addCourt = BookingCourtFragment()
+//            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+//            transaction.replace(R.id.container, addCourt)
+//            transaction.addToBackStack(null)
+//            transaction.commit()
+
+            val navHostFragment =
+                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.action_navigation_play_to_bookingCourtFragment)
         }
     }
 

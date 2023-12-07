@@ -77,7 +77,7 @@ class EditProfileFragment: Fragment() {
         // Back button behavior
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Profile"
-            setDisplayHomeAsUpEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
 
             val userProfileViewModel: NotificationsViewModel by activityViewModels()
 
@@ -108,7 +108,6 @@ class EditProfileFragment: Fragment() {
         binding.buttonChangePhoto.setOnClickListener {
             checkGalleryPermissionAndOpen()
         }
-    }
 
         val userProfileViewModel: NotificationsViewModel by activityViewModels()
         binding.buttonSaveProfile.setOnClickListener{
