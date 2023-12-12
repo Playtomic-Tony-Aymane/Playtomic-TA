@@ -1,31 +1,27 @@
 package com.example.playtomictonyaymane.ui.OpenMatch
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CalendarView
-import android.widget.GridView
-import android.widget.LinearLayout
-import android.widget.SearchView
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.R
+import com.example.playtomictonyaymane.databinding.FragmentOpenMatchActivitiesBinding
+
 
 class ActivitiesOpenMatchesFragment :Fragment(){
 
-
+    private var  _binding: FragmentOpenMatchActivitiesBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_open_match_activities, container, false)
+        _binding = FragmentOpenMatchActivitiesBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         // Ophalen van de views uit de XML
         val recyclerView = view.findViewById<RecyclerView>(R.id.matchesRecyclerView)
@@ -51,6 +47,13 @@ class ActivitiesOpenMatchesFragment :Fragment(){
         val matchesAdapter = ActivitiesOpenMatchAdapter(existingMatchesList)
         recyclerView.adapter = matchesAdapter
 
+        binding.addMatchButton.setOnClickListener{
+            val addMatch = AddMatchesFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, addMatch)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
 
 
 

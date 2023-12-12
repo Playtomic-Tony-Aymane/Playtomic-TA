@@ -1,0 +1,22 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/textAvailabilityTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Availability from Playtomic clubs"
+        android:padding="16dp" />
+
+    <!-- RecyclerView voor de lijst van clubkaarten -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/clubsAvailabilityRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

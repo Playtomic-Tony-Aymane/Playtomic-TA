@@ -22,7 +22,7 @@ class MatchPagerAdapter (fragmentManager: FragmentManager) : FragmentPagerAdapte
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
-            0 -> "Activities" // Titel voor het eerste tabblad
+            0 -> "Available" // Titel voor het eerste tabblad
             1 -> "My Matches" // Titel voor het tweede tabblad
             else -> ""
         }
