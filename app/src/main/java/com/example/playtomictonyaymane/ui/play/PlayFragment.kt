@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentPlayBinding
+import com.example.playtomictonyaymane.ui.OpenMatch.OpenMatchesFragment
 import com.example.playtomictonyaymane.ui.court.BookingCourtFragment
 import com.example.playtomictonyaymane.ui.dashboard.DashboardFragment
 import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
@@ -61,6 +62,15 @@ class PlayFragment: Fragment() {
                 requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
             val navController = navHostFragment.navController
             navController.navigate(R.id.action_navigation_play_to_bookingCourtFragment)
+        }
+
+        binding.buttonAddmatch.setOnClickListener {
+
+            val addOpenMatch = OpenMatchesFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, addOpenMatch)
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
     }
 

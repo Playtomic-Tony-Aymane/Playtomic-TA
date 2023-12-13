@@ -23,8 +23,7 @@ class NotificationsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private lateinit var viewPager: ViewPager2
-    private lateinit var tabLayout: TabLayout
+
 
     val userProfileViewModel: NotificationsViewModel by activityViewModels()
 
