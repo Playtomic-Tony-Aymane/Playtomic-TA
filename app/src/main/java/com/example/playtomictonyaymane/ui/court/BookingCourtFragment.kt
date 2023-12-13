@@ -257,28 +257,55 @@ class BookingCourtFragment:Fragment() {
             .addOnSuccessListener { documents ->
                 val bookedRanges = documents.mapNotNull { document ->
                     val startTime = document.getTimestamp("date")?.toDate()
-                    val duration = document.getLong("duration")?.toInt() ?: 0
-                    if (startTime != null) {
-                        val endTime = Calendar.getInstance()
-                        endTime.time = startTime
-                        endTime.add(Calendar.MINUTE, duration)
-                        startTime to endTime.time
-                    } else null
-                }
+                    val duration = (document.getLong("duration") ?: return@mapNotNull null).toInt()
 
-                val timeSlots = generateTimeSlots()
+                    startTime?.let { start ->
+                        val end = Calendar.getInstance().apply {
+                            time = start
+                            add(Calendar.MINUTE, duration)
+                        }.time
+                        start to end
+                    }
+                }.sortedBy { it.first } // Sort by the start times of the bookings for easier management.
+
                 val timeFormat = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
-                val availableTimeSlots = timeSlots.filter { timeSlotStr ->
-                    val slotCal = Calendar.getInstance()
-                    val parsedDate = timeFormat.parse(timeSlotStr)
-                    slotCal.time = parsedDate
 
-                    // Check if the time slot is within any of the booked ranges
+                // Generate the complete list of time slots for the day
+                val fullDayTimeSlots = generateTimeSlots()
+
+                // Calculate the last possible starting time for a 90-minute slot before the day ends
+//                val lastStartTime = Calendar.getInstance().apply {
+//                    time = dayEnd
+//                    add(Calendar.MINUTE, -90) // 90 Minutes before end time
+//                }.time
+//
+//                val lastStartSlot = timeFormat.format(lastStartTime)
+
+                // Filter to find only available (unbooked) 90-minute time slots
+                // .takeWhile { it <= lastStartSlot }
+                // Filtering the time slots to exclude any that overlap with booked slots.
+                val availableTimeSlots = fullDayTimeSlots.filter { startTimeStr ->
+                    val startTimeCal = Calendar.getInstance().apply {
+                        time = timeFormat.parse(startTimeStr) ?: throw IllegalArgumentException("Invalid time string: $startTimeStr")
+                    }
+
+                    // Increment the start time by 90 minutes to get the end time of this prospective booking slot
+                    val potentialEndTimeCal = (startTimeCal.clone() as Calendar).apply {
+                        add(Calendar.MINUTE, 90)
+                    }
+
+                    // Ensure that the 90-minute slot doesn't overlap with any existing bookings
+                    // and that it also does not surpass the last possible start time slot.
                     bookedRanges.none { (bookingStart, bookingEnd) ->
-                        timeSlotWithinBookedRange(slotCal, bookingStart, bookingEnd)
+                        val a1 = timeSlotOverlapsBookedRange(startTimeCal.time, potentialEndTimeCal.time, bookingStart, bookingEnd)
+
+                        Log.v("Timeslots", "${startTimeCal.time} ${potentialEndTimeCal.time} ${bookingStart} ${bookingEnd} -> ${a1}")
+
+                        return@filter a1
                     }
                 }
 
+                // Update RecyclerView adapter
                 adapterTimeSlot.updateTimeslots(availableTimeSlots, false)
             }
             .addOnFailureListener { exception ->
@@ -286,6 +313,11 @@ class BookingCourtFragment:Fragment() {
                 // Handle the error appropriately
                 adapterTimeSlot.updateTimeslots(emptyList(), false)
             }
+    }
+    private fun timeSlotOverlapsBookedRange(slotStart: Date, slotEnd: Date, bookingStart: Date, bookingEnd: Date): Boolean {
+        // A slot overlaps with a booking if it starts before the booking ends and ends after the booking starts.
+        // This will cover any partial or full overlap within the booking range.
+        return slotStart.before(bookingEnd) && slotEnd.after(bookingStart)
     }
 
     private fun fetchCourtsAndSetupSpinner(spinner: Spinner) {
@@ -322,7 +354,16 @@ class BookingCourtFragment:Fragment() {
         calendar.set(java.util.Calendar.SECOND, 0)
         calendar.set(java.util.Calendar.MILLISECOND, 0)
 
+        val lastStartTime = Calendar.getInstance().apply {
+            time = calendar.time
+            set(Calendar.HOUR, endTime)
+            add(Calendar.MINUTE, -90) // 90 Minutes before end time
+        }.time
+
         while (calendar.get(java.util.Calendar.HOUR_OF_DAY) < endTime) {
+            if (calendar.time > lastStartTime) {
+                break
+            }
             val timeSlot = timeFormat.format(calendar.time)
             timeSlots.add(timeSlot)
             calendar.add(java.util.Calendar.MINUTE, 30)
@@ -330,8 +371,6 @@ class BookingCourtFragment:Fragment() {
 
         return timeSlots
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
