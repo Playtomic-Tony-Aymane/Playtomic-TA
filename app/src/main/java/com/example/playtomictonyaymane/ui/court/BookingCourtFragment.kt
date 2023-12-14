@@ -70,6 +70,14 @@ class BookingCourtFragment:Fragment() {
             loadAvailableTimeSlots(view, calendar.time)
         }
 
+        val calendarToday = Calendar.getInstance()
+        // Set Time to 0 to avoid timezone issues
+        calendarToday.set(Calendar.HOUR_OF_DAY, 0)
+        calendarToday.set(Calendar.MINUTE, 0)
+        calendarToday.set(Calendar.SECOND, 0)
+        calendarToday.set(Calendar.MILLISECOND, 0)
+        datePicker.minDate = calendarToday.timeInMillis
+
         val spinnerCourtList = view.findViewById<Spinner>(R.id.spinnerCourtList)
         fetchCourtsAndSetupSpinner(spinnerCourtList)
 
@@ -126,9 +134,11 @@ class BookingCourtFragment:Fragment() {
                     val transaction = requireActivity().supportFragmentManager.beginTransaction()
 
                     // Vervang het huidige fragment door PlayFragment
-                    transaction.replace(R.id.container, dashboard)
-                    transaction.addToBackStack("Play")
-                    transaction.commit()
+//                    transaction.replace(R.id.container, dashboard)
+//                    transaction.addToBackStack("Play")
+//                    transaction.commit()
+
+                    findNavController().navigateUp()
                 }
                 else
                 {
@@ -250,6 +260,11 @@ class BookingCourtFragment:Fragment() {
             set(Calendar.SECOND, 59)
         }.time
 
+        val dayStartCal = Calendar.getInstance().apply {
+            time = dayStart
+        }
+        val currentTime = Calendar.getInstance().time
+
         AuthData.db.collection("bookings")
             .whereGreaterThanOrEqualTo("date", dayStart)
             .whereLessThanOrEqualTo("date", dayEnd)
@@ -287,7 +302,14 @@ class BookingCourtFragment:Fragment() {
                 val availableTimeSlots = fullDayTimeSlots.filter { startTimeStr ->
                     val startTimeCal = Calendar.getInstance().apply {
                         time = timeFormat.parse(startTimeStr) ?: throw IllegalArgumentException("Invalid time string: $startTimeStr")
+                        set(Calendar.YEAR, dayStartCal.get(Calendar.YEAR))
+                        set(Calendar.MONTH, dayStartCal.get(Calendar.MONTH))
+                        set(Calendar.DAY_OF_MONTH, dayStartCal.get(Calendar.DAY_OF_MONTH))
                     }
+
+                    // Filter out times before the current time
+                    val slotStartTime = startTimeCal.time
+                    if (slotStartTime.before(currentTime)) return@filter false
 
                     // Increment the start time by 90 minutes to get the end time of this prospective booking slot
                     val potentialEndTimeCal = (startTimeCal.clone() as Calendar).apply {
@@ -296,13 +318,15 @@ class BookingCourtFragment:Fragment() {
 
                     // Ensure that the 90-minute slot doesn't overlap with any existing bookings
                     // and that it also does not surpass the last possible start time slot.
-                    bookedRanges.none { (bookingStart, bookingEnd) ->
+                    val a2 = bookedRanges.none { (bookingStart, bookingEnd) ->
                         val a1 = timeSlotOverlapsBookedRange(startTimeCal.time, potentialEndTimeCal.time, bookingStart, bookingEnd)
 
-                        Log.v("Timeslots", "${startTimeCal.time} ${potentialEndTimeCal.time} ${bookingStart} ${bookingEnd} -> ${a1}")
+                        Log.v("Timeslots", "`${startTimeCal.time}` TO `${potentialEndTimeCal.time}` vs `${bookingStart}` TO `${bookingEnd}` -> ${a1}")
 
-                        return@filter a1
+                        return@none a1
                     }
+                    Log.v("Timeslots", "${a2}")
+                    return@filter a2
                 }
 
                 // Update RecyclerView adapter

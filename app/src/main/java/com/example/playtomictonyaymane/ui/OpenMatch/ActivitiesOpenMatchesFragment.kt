@@ -5,10 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playtomictonyaymane.AuthData
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentOpenMatchActivitiesBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class ActivitiesOpenMatchesFragment :Fragment(){
@@ -23,41 +28,67 @@ class ActivitiesOpenMatchesFragment :Fragment(){
         _binding = FragmentOpenMatchActivitiesBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Ophalen van de views uit de XML
         val recyclerView = view.findViewById<RecyclerView>(R.id.matchesRecyclerView)
-
-
-        // Simulatie van lijst met bestaande matches
-        val existingMatchesList = listOf(
-            Match("Match 1", "2023-12-15", "10:00", "Field A"),
-            Match("Match 2", "2023-12-20", "14:30", "Field B"),
-            Match("Match 2", "2023-12-20", "14:30", "Field B"),
-            Match("Match 2", "2023-12-20", "14:30", "Field B"),
-            Match("Match 2", "2023-12-20", "14:30", "Field B"),
-            Match("Match 2", "2023-12-20", "14:30", "Field B"),
-            Match("Match 2", "2023-12-20", "14:30", "Field B"),
-            Match("Match 2", "2023-12-20", "14:30", "Field B"),
-
-            // Voeg meer matches toe zoals nodig
-        )
-
-        // Zet de RecyclerView op met een aangepaste adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        // Initialize the matches list
+        val existingMatchesList = mutableListOf<Match>()
+
+        // Initialize the adapter with an empty list first
         val matchesAdapter = ActivitiesOpenMatchAdapter(existingMatchesList)
         recyclerView.adapter = matchesAdapter
 
-        binding.addMatchButton.setOnClickListener{
-            val addMatch = AddMatchesFragment()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, addMatch)
-            transaction.addToBackStack(null)
-            transaction.commit()
+        loadMatchesData(existingMatchesList, matchesAdapter)
+
+        binding.addMatchButton.setOnClickListener {
+            // Navigation code
         }
 
-
-
         return view
+    }
+
+    private fun loadMatchesData(matchesList: MutableList<Match>, adapter: ActivitiesOpenMatchAdapter) {
+        val currentTime = Calendar.getInstance().time // Get the current time
+
+        AuthData.db.collection("matches")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val matchId = document.id
+                    val matchType = document.getString("matchType") ?: "Unknown"
+                    val matchGender = document.getString("matchGender") ?: "Unknown"
+                    val bookingRef = document.getDocumentReference("booking")
+
+                    bookingRef?.get()?.addOnSuccessListener { bookingDoc ->
+                        val courtRef = bookingDoc.getDocumentReference("court")
+                        val date = bookingDoc.getTimestamp("date")?.toDate()
+                        val sdfDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                        val sdfTime = SimpleDateFormat("HH:mm", Locale.getDefault())
+                        val formattedDate = sdfDate.format(date)
+                        val formattedTime = sdfTime.format(date)
+
+                        courtRef?.get()?.addOnSuccessListener { courtDoc ->
+                            val courtName = courtDoc.getString("name") ?: "Unknown"
+                            val courtAddress = courtDoc.getString("address") ?: "Unknown"
+
+                            val match = Match(
+                                name = "Match $matchId",
+                                date = formattedDate,
+                                time = formattedTime,
+                                fieldName = "$courtName ($courtAddress)"
+                            )
+                            matchesList.add(
+                                match
+                            )
+
+                            adapter.notifyDataSetChanged() // Notify the adapter about the updated list
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                // Handle error
+            }
     }
 
 

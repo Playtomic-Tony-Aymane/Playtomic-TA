@@ -51,13 +51,6 @@ class PlayFragment: Fragment() {
         actionBar?.setDisplayHomeAsUpEnabled(false)
 
         binding.buttonAddCourt.setOnClickListener {
-
-//            val addCourt = BookingCourtFragment()
-//            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-//            transaction.replace(R.id.container, addCourt)
-//            transaction.addToBackStack(null)
-//            transaction.commit()
-
             val navHostFragment =
                 requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
             val navController = navHostFragment.navController
@@ -65,12 +58,10 @@ class PlayFragment: Fragment() {
         }
 
         binding.buttonAddmatch.setOnClickListener {
-
-            val addOpenMatch = OpenMatchesFragment()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, addOpenMatch)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            val navHostFragment =
+                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.action_navigation_play_to_openMatchesFragment)
         }
     }
 

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.R
 
-class MyMatchesAdapter (private val myMatchesList: List<MyMatchesFragment.Match>) :
+class MyMatchesAdapter (private var myMatchesList: List<MyMatchesFragment.Match>) :
     RecyclerView.Adapter<MyMatchesAdapter.MyMatchesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyMatchesViewHolder {
@@ -23,6 +23,11 @@ class MyMatchesAdapter (private val myMatchesList: List<MyMatchesFragment.Match>
 
     override fun getItemCount(): Int {
         return myMatchesList.size
+    }
+
+    fun updateMatches(newMatches: List<MyMatchesFragment.Match>) {
+        this.myMatchesList = newMatches
+        notifyDataSetChanged() // Notify the adapter to refresh the RecyclerView
     }
 
     inner class MyMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

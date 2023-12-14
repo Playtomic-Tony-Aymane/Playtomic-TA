@@ -37,7 +37,8 @@ inner class ClubsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
         holder.day.text = currentClub.day
 
         // Creëer een adapter voor de tijdsslots
-        val timeSlotsAdapter = TimeSlotsAdapter(currentClub.timeSlot)
+        // List here!
+        val timeSlotsAdapter = TimeSlotsAdapter(currentClub.startTimes, currentClub.bookingId)
 
         // Configureer de RecyclerView voor tijdsslots
         holder.recyclerViewTimeSlots.apply {

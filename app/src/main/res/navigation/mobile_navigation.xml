@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_navigation_play_to_bookingCourtFragment"
             app:destination="@id/bookingCourtFragment" />
+        <action
+            android:id="@+id/action_navigation_play_to_openMatchesFragment"
+            app:destination="@id/openMatchesFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -63,6 +66,18 @@
         android:id="@+id/bookingCourtFragment"
         android:name="com.example.playtomictonyaymane.ui.court.BookingCourtFragment"
         android:label="BookingCourtFragment" />
+    <fragment
+        android:id="@+id/openMatchesFragment"
+        android:name="com.example.playtomictonyaymane.ui.OpenMatch.OpenMatchesFragment"
+        android:label="OpenMatchesFragment" >
+        <action
+            android:id="@+id/action_openMatchesFragment_to_addMatchesFragment"
+            app:destination="@id/addMatchesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMatchesFragment"
+        android:name="com.example.playtomictonyaymane.ui.OpenMatch.AddMatchesFragment"
+        android:label="AddMatchesFragment" />
 
 
 </navigation>
