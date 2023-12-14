@@ -42,6 +42,10 @@ class ActivitiesOpenMatchesFragment :Fragment(){
 
         binding.addMatchButton.setOnClickListener {
             // Navigation code
+            val navHostFragment =
+                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.action_openMatchesFragment_to_addMatchesFragment)
         }
 
         return view
