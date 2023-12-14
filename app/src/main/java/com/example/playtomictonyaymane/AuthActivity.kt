@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.playtomictonyaymane.ui.auth.EmailFragment
 import com.example.playtomictonyaymane.ui.auth.PasswordFragment
+import com.example.playtomictonyaymane.ui.notifications.NotificationsViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class AuthActivity : AppCompatActivity() {
@@ -24,6 +26,14 @@ class AuthActivity : AppCompatActivity() {
                 add<EmailFragment>(R.id.activity_auth_fragment_container_view)
             }
         }
+
+        AuthData.init()
+        val currentUser = AuthData.auth.currentUser
+        if(currentUser != null){
+            Log.v("Auth-Activity", "User already logged in, trying to redirect")
+            authContinueHome()
+            return
+        }
     }
 
     fun authContinuePassword(email: String, exists: Boolean) {
@@ -34,6 +44,17 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    private fun authContinueHomeRedirect(isUserDataValid: Boolean, data: HashMap<String, String?>? = null)
+    {
+        Log.v("Auth-Activity", "User correctly authenticated, redirecting to home")
+        val intent = Intent(this, MainActivity::class.java).apply {
+            // Add an extra field to indicate whether to load EditProfileFragment or not
+            putExtra("LOAD_PROFILE_FRAGMENT", !isUserDataValid)
+            putExtra("LOAD_PROFILE_DATA", data)
+        }
+        startActivity(intent)
+        finish()
+    }
     fun authContinueHome()
     {
         // check that user is logged in
@@ -47,8 +68,22 @@ class AuthActivity : AppCompatActivity() {
             ).show()
             return
         }
-        Log.v("Auth-Activity", "User correctly authenticated, redirecting to home")
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+
+        // check that data is valid
+        AuthData.loadFromFireStore(success = { data ->
+            if (AuthData.isUserDataValid(data))
+            {
+                Log.v("Auth-Activity", "User data is valid")
+                authContinueHomeRedirect(true, data)
+            }
+            else
+            {
+                Log.v("Auth-Activity", "User data is invalid! Redirecting to Edit Profile")
+                authContinueHomeRedirect(false)
+            }
+        }, failure = {
+            Log.v("Auth-Activity", "User data has failure! Does not exist? Redirecting to Edit Profile")
+            authContinueHomeRedirect(false)
+        })
     }
 }

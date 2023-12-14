@@ -12,4 +12,6 @@
     <string name="auth_request_password">Text</string>
     <string name="auth_continue">Continue</string>
     <string name="sign_out">Sign out</string>
+    <string name="book_button_text">Book a court</string>
+    <string name="start_match">Play a match</string>
 </resources>

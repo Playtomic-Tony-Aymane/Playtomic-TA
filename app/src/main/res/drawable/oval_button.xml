@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#D4ED31" /> <!-- Achtergrondkleur van de knop -->
+    <stroke
+        android:width="2dp"
+        android:color="#000000"
+        android:dashGap="4dp"
+        android:dashWidth="8dp" />
+    <corners android:radius="12dp" /> <!-- Straal van de afgeronde hoeken -->
+</shape>
