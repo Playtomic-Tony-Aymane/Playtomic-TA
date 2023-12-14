@@ -7,22 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playtomictonyaymane.AuthData
 import com.example.playtomictonyaymane.R
+import com.google.firebase.firestore.DocumentSnapshot
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class MyMatchesFragment:Fragment() {
+class MyMatchesFragment : Fragment() {
 
-    // Voorbeeld van een modelklasse voor een Match
-    data class Match(val id: Int, val title: String, val date: String)
+    data class Match(val id: String, val title: String, val date: String)
 
-    // Een lijst van bestaande matches voorbereiden
-    private fun prepareExistingMatches(): List<Match> {
-        val matchList = mutableListOf<Match>()
-        matchList.add(Match(1, "Match 1", "2023-12-01"))
-        matchList.add(Match(2, "Match 2", "2023-12-03"))
-        matchList.add(Match(3, "Match 3", "2023-12-05"))
-        // Voeg hier meer matches toe op dezelfde manier
-        return matchList
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,11 +27,67 @@ class MyMatchesFragment:Fragment() {
         val recyclerViewMyMatches: RecyclerView = view.findViewById(R.id.recyclerViewMyMatches)
         recyclerViewMyMatches.layoutManager = LinearLayoutManager(requireContext())
 
-        // Gebruik een adapter om de lijst van jouw matches in te vullen
-        val myMatches = prepareExistingMatches()
-        val adapter = MyMatchesAdapter(myMatches)
-        recyclerViewMyMatches.adapter = adapter
+        // Fetch and display the user's matches
+        loadUserMatches(recyclerViewMyMatches)
 
         return view
+    }
+
+    private fun loadUserMatches(recyclerView: RecyclerView) {
+        val currentUser = AuthData.auth.currentUser
+        val matchList = mutableListOf<Match>()
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        if (currentUser != null) {
+            val userId = currentUser.uid
+            val userRef = AuthData.db.collection("users").document(userId)
+
+            // Create a Firestore query for matches where the user is a player or the owner
+            AuthData.db.collection("matches")
+                .whereArrayContains("players", userRef)
+                .get()
+                .addOnSuccessListener { matchesSnapshot ->
+                    for (document in matchesSnapshot) {
+                        val id = document.id
+                        val title = document.getString("matchType") ?: "Unknown"
+                        val dateTimestamp = document.getTimestamp("date")
+                        val formattedDate = dateTimestamp?.toDate()?.let { sdf.format(it) } ?: "Unknown"
+
+                        matchList.add(Match(id, title, formattedDate))
+                    }
+                    // Set up adapter
+                    val adapter = MyMatchesAdapter(matchList)
+                    recyclerView.adapter = adapter
+                }
+                .addOnFailureListener { e ->
+                    // Handle the error
+                }
+
+            // Additionally fetch matches where current user is the owner
+            AuthData.db.collection("matches")
+                .whereEqualTo("owner", userRef)
+                .get()
+                .addOnSuccessListener { matchesSnapshot ->
+                    for (document in matchesSnapshot) {
+                        val id = document.id
+                        val title = document.getString("matchType") ?: "Unknown"
+                        val dateTimestamp = document.getTimestamp("date")
+                        val formattedDate = dateTimestamp?.toDate()?.let { sdf.format(it) } ?: "Unknown"
+
+                        // Check if match already added from previous query
+                        val matchExists = matchList.any { it.id == id }
+                        if (!matchExists) {
+                            matchList.add(Match(id, title, formattedDate))
+                        }
+                    }
+
+                    // Since we might have additional data, notify the adapter
+                    val adapter = recyclerView.adapter as? MyMatchesAdapter
+                    adapter?.updateMatches(matchList)
+                }
+                .addOnFailureListener { e ->
+                    // Handle the error
+                }
+        }
     }
 }

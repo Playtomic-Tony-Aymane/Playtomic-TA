@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/editProfileFragment"
+    app:startDestination="@+id/navigation_home"
     >
 
     <fragment
@@ -45,13 +45,39 @@
         android:id="@+id/navigation_play"
         android:name="com.example.playtomictonyaymane.ui.play.PlayFragment"
         android:label="@string/title_play"
-        tools:layout="@layout/fragment_play" />
+        tools:layout="@layout/fragment_play" >
+        <action
+            android:id="@+id/action_navigation_play_to_bookingCourtFragment"
+            app:destination="@id/bookingCourtFragment" />
+        <action
+            android:id="@+id/action_navigation_play_to_openMatchesFragment"
+            app:destination="@id/openMatchesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.playtomictonyaymane.ui.editProfile.EditProfileFragment"
         android:label="fragment_editprofile"
-        tools:layout="@layout/fragment_editprofile" />
-
+        tools:layout="@layout/fragment_editprofile">
+        <action
+            android:id="@+id/action_navigation_editProfile_to_navigation_user"
+            app:destination="@id/navigation_user" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookingCourtFragment"
+        android:name="com.example.playtomictonyaymane.ui.court.BookingCourtFragment"
+        android:label="BookingCourtFragment" />
+    <fragment
+        android:id="@+id/openMatchesFragment"
+        android:name="com.example.playtomictonyaymane.ui.OpenMatch.OpenMatchesFragment"
+        android:label="OpenMatchesFragment" >
+        <action
+            android:id="@+id/action_openMatchesFragment_to_addMatchesFragment"
+            app:destination="@id/addMatchesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMatchesFragment"
+        android:name="com.example.playtomictonyaymane.ui.OpenMatch.AddMatchesFragment"
+        android:label="AddMatchesFragment" />
 
 
 </navigation>
