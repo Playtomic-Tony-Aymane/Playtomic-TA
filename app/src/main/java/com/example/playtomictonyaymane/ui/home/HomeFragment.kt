@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.playtomictonyaymane.databinding.FragmentHomeBinding
+import com.example.playtomictonyaymane.ui.editProfile.HomeViewModel
 
 class HomeFragment : Fragment() {
 

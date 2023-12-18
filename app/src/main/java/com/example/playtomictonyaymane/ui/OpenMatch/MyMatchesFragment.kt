@@ -63,6 +63,7 @@ class MyMatchesFragment : Fragment() {
                     // Handle the error
                 }
 
+
             // Additionally fetch matches where current user is the owner
             AuthData.db.collection("matches")
                 .whereEqualTo("owner", userRef)
