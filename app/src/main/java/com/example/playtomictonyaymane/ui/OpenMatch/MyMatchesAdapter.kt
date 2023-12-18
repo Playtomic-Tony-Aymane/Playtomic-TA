@@ -1,5 +1,6 @@
 package com.example.playtomictonyaymane.ui.OpenMatch
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,11 +36,25 @@ class MyMatchesAdapter (private var myMatchesList: List<MyMatchesFragment.Match>
         private val dateTextView: TextView = itemView.findViewById(R.id.dateTextView)
 
         fun bind(match: MyMatchesFragment.Match) {
-            titleTextView.text = match.title
+            var text: String = ""
+            text += when (match.matchType) {
+                "friendly" -> "Friendly "
+                "competitive" -> "Competitive "
+                else -> ""
+            }
+            text += when (match.matchGender) {
+                "men" -> "♂ "
+                "women" -> "♀ "
+                else -> "♂♀ "
+            }
+            text += match.courtName
+
+            titleTextView.text = text
             dateTextView.text = match.date
 
             itemView.setOnClickListener {
                 // Voeg hier acties toe die moeten plaatsvinden wanneer op een match wordt geklikt
+                Log.v("Matches", "Clicked on ${titleTextView.text} ${dateTextView.text}")
             }
         }
     }
