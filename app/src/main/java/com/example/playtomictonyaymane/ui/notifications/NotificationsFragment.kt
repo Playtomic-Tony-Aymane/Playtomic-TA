@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.playtomictonyaymane.MainActivity
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentUserBinding
+import com.example.playtomictonyaymane.ui.editProfile.EditProfileFragment
 import com.example.playtomictonyaymane.ui.tabs.ViewPagerAdapter
 //import com.example.playtomictonyaymane.ui.tabs.ViewPagerAdapter
 import com.google.android.material.button.MaterialButton
@@ -23,8 +24,7 @@ class NotificationsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private lateinit var viewPager: ViewPager2
-    private lateinit var tabLayout: TabLayout
+
 
     val userProfileViewModel: NotificationsViewModel by activityViewModels()
 
@@ -55,11 +55,11 @@ class NotificationsFragment : Fragment() {
             val navController = navHostFragment.navController
             navController.navigate(R.id.action_navigation_user_to_editProfileFragment)
 
-//            val Editfragmet = EditProfileFragment()
-//            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-//            transaction.replace(R.id.container, Editfragmet)
-//            //transaction.addToBackStack("UserProfile")
-//            transaction.commit()
+            /*val Editfragmet = EditProfileFragment()
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, Editfragmet)
+             transaction.addToBackStack("UserProfile")
+              transaction.commit()*/
 
         }
 
