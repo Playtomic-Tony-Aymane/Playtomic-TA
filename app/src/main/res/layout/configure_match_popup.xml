@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Configure your match"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:padding="16dp"/>
 
@@ -17,33 +17,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Choose your type of match"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:padding="8dp"/>
 
     <CheckBox
         android:id="@+id/checkboxCompetitive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Competitive"/>
+        android:text="Competitive"
+        android:textSize="16sp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="The result will affect your level and ranking"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:paddingStart="24dp"/>
 
     <CheckBox
         android:id="@+id/checkboxFriendly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Friendly"/>
+        android:text="Friendly"
+        android:textSize="16sp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="The result will not affect your level and ranking"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:paddingStart="24dp"/>
 
     <!-- Select gender section -->
@@ -51,26 +53,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select the gender you want to play with:"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:padding="8dp"/>
 
     <CheckBox
         android:id="@+id/checkboxAllPlayers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All players"/>
+        android:text="All players"
+        android:textSize="16sp"/>
 
     <CheckBox
         android:id="@+id/checkboxOnlyMen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Only men"/>
+        android:text="Only men"
+        android:textSize="16sp"/>
 
     <CheckBox
         android:id="@+id/checkboxOnlyWomen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Only women"/>
+        android:text="Only women"
+        android:textSize="16sp"/>
 
     <!-- Button to start the match -->
     <Button
@@ -78,6 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Match"
+        android:textSize="18sp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"/>
 </LinearLayout>
