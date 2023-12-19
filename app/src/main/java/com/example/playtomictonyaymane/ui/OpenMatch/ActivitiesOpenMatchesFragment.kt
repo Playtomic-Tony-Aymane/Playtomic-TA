@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 
 
@@ -164,17 +163,5 @@ class ActivitiesOpenMatchesFragment :Fragment(){
     }
 
 
-    private fun showMatchDetails(selectedMatch: MyMatchesFragment.Match) {
-        // Implementeer logica om de details van de geselecteerde match te tonen
-        // Pas de datum, tijd, veldnaam, spelersgrid, matchtype, niveau, prijs, etc. aan met de gegevens van de geselecteerde match
-    }
 
-    // Voeg een model toe voor de Match-gegevens
-    data class Match2(
-        val name: String,
-        val date: String,
-        val time: String,
-        val fieldName: String
-        // Voeg hier meer gegevens toe zoals spelers, matchtype, niveau, prijs, etc.
-    )
 }
