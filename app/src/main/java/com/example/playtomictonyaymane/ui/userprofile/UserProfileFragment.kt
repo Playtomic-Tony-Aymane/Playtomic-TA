@@ -45,14 +45,7 @@ class UserProfileFragment : Fragment() {
 
 
         editProfileButton.setOnClickListener {
-<<<<<<< HEAD:app/src/main/java/com/example/playtomictonyaymane/ui/userprofile/UserProfileFragment.kt
-            findNavController().navigate(R.id.editProfileFragment)
-=======
-            val navHostFragment =
-                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-            val navController = navHostFragment.navController
-            navController.navigate(R.id.action_navigation_user_to_editProfileFragment)
->>>>>>> master:app/src/main/java/com/example/playtomictonyaymane/ui/notifications/NotificationsFragment.kt
+            findNavController().navigate(R.id.action_navigation_user_to_editProfileFragment)
         }
 
         signoutButton.setOnClickListener {
@@ -71,7 +64,7 @@ class UserProfileFragment : Fragment() {
         }.attach()
 
 
-        val userProfileViewModel = activityViewModels<NotificationsViewModel>().value
+        val userProfileViewModel = activityViewModels<UserProfileViewModel>().value
         // Observe LiveData fields and update UI accordingly
         userProfileViewModel.firstName.observe(viewLifecycleOwner) { firstName ->
             binding.userName.text = "$firstName ${userProfileViewModel.lastName.value}"
