@@ -3,27 +3,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentPlayBinding
-import com.example.playtomictonyaymane.ui.OpenMatch.OpenMatchesFragment
-import com.example.playtomictonyaymane.ui.court.BookingCourtFragment
-import com.example.playtomictonyaymane.ui.dashboard.DashboardFragment
-import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
-import com.example.playtomictonyaymane.ui.tabs.ActivitiesFragment
 
 class PlayFragment: Fragment() {
     private var _binding: FragmentPlayBinding? = null
 
-    // This property is only valid between onCreateView and
+    // This property is only valid between onCreateView andfèi
     // onDestroyView.
     private val binding get() = _binding!!
 
@@ -54,16 +44,22 @@ class PlayFragment: Fragment() {
             val navHostFragment =
                 requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
             val navController = navHostFragment.navController
-            navController.navigate(R.id.action_navigation_play_to_bookingCourtFragment)
+            navController.navigate(R.id.bookingCourtFragment)
+
         }
 
         binding.buttonAddmatch.setOnClickListener {
             val navHostFragment =
                 requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
             val navController = navHostFragment.navController
-            navController.navigate(R.id.action_navigation_play_to_openMatchesFragment)
+            navController.navigate(R.id.openMatchesFragment)
+
         }
+
+
     }
+
+
 
 
 

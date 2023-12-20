@@ -1,4 +1,4 @@
-package com.example.playtomictonyaymane.ui.gopremium
+package com.example.playtomictonyaymane.ui.signout
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,9 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.playtomictonyaymane.databinding.FragmentEditprofileBinding
 import com.example.playtomictonyaymane.databinding.FragmentGopremiumBinding
-import com.example.playtomictonyaymane.ui.editProfile.EditViewModel
 
-class GoPremuimFragment: Fragment() {
+class SignOutFragment: Fragment() {
 
     private var  _binding: FragmentGopremiumBinding? = null
 
@@ -26,7 +24,7 @@ class GoPremuimFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(GoPremuimView::class.java)
+            ViewModelProvider(this).get(SignOutView::class.java)
 
         _binding = FragmentGopremiumBinding.inflate(inflater, container, false)
         val root: View = binding.root

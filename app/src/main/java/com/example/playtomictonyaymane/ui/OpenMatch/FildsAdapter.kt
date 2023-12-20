@@ -1,16 +1,12 @@
 package com.example.playtomictonyaymane.ui.OpenMatch
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.R
-import com.example.playtomictonyaymane.ui.tabs.TimeSlotAdapter
 
 
 
@@ -55,11 +51,3 @@ inner class ClubsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     }
 }
 
-/*data class Field(
-    val fieldName: String,
-    val name : String,
-    val time : String,
-    val date: String,
-    val timeSlots: List<String> // List met beschikbare tijdslots
-)
-*/

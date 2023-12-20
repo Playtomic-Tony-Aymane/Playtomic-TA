@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home"
+    app:startDestination="@+id/navigation_play"
     >
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.playtomictonyaymane.ui.notifications.NotificationsFragment"
+        android:name="com.example.playtomictonyaymane.ui.userprofile.UserProfileFragment"
         android:label="@string/title_user"
         tools:layout="@layout/fragment_user" >
         <action
@@ -24,13 +24,13 @@
 
     <fragment
         android:id="@+id/navigation_discovery"
-        android:name="com.example.playtomictonyaymane.ui.dashboard.DashboardFragment"
+        android:name="com.example.playtomictonyaymane.ui.searchcourt_discovery.SearchCourtFragment"
         android:label="@string/title_discovery"
         tools:layout="@layout/fragment_discovery" />
 
     <fragment
         android:id="@+id/navigation_user"
-        android:name="com.example.playtomictonyaymane.ui.notifications.NotificationsFragment"
+        android:name="com.example.playtomictonyaymane.ui.userprofile.UserProfileFragment"
         android:label="@string/title_user"
         tools:layout="@layout/fragment_user" >
         <action

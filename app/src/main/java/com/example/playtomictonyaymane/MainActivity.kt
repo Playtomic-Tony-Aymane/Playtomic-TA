@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import androidx.activity.OnBackPressedCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -14,12 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.playtomictonyaymane.databinding.ActivityMainBinding
-import com.example.playtomictonyaymane.ui.editProfile.EditProfileFragment
-import com.example.playtomictonyaymane.ui.notifications.NotificationsViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.playtomictonyaymane.ui.userprofile.UserProfileViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-             R.id.navigation_play,R.id.navigation_user, R.id.navigation_discovery
+             R.id.navigation_play,R.id.navigation_discovery, R.id.navigation_user
             )
         )
 
@@ -61,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val userProfileViewModel = ViewModelProvider(this)[NotificationsViewModel::class.java]
+        val userProfileViewModel = ViewModelProvider(this)[UserProfileViewModel::class.java]
         userProfileViewModel.loadProfile()
 
         // Check whether to load EditProfileFragment or not

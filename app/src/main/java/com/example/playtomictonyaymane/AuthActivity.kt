@@ -5,14 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.example.playtomictonyaymane.ui.auth.EmailFragment
 import com.example.playtomictonyaymane.ui.auth.PasswordFragment
-import com.example.playtomictonyaymane.ui.notifications.NotificationsViewModel
-import com.google.firebase.auth.FirebaseAuth
 
 class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

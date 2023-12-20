@@ -10,18 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.AuthData
 import com.example.playtomictonyaymane.R
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class AddMatchesFragment : Fragment() {
 
     lateinit var recyclerView: RecyclerView
-    lateinit var clubsAdapter: FieldsAdapter
-    var clubsAvailabilityList = mutableListOf<ClubAvailability>()
 
 
     override fun onCreateView(
@@ -39,63 +34,7 @@ class AddMatchesFragment : Fragment() {
         return view
     }
 
-    private fun loadBookedClubsAvailability2() {
-        val clubsAvailabilityList = mutableListOf<ClubAvailability>()
-        val currentUser = AuthData.auth.currentUser
-        val currentTime = Calendar.getInstance()
 
-        if (currentUser != null) {
-            AuthData.db.collection("bookings")
-                .whereEqualTo("owner", AuthData.db.collection("users").document(currentUser.uid))
-                .whereGreaterThanOrEqualTo("date", currentTime.time)
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    // This counter will help us know when all async calls have returned
-                    var remainingCalls = querySnapshot.size()
-
-                    if (remainingCalls == 0) {
-                        updateRecyclerView(clubsAvailabilityList)
-                    }
-
-                    for (document in querySnapshot) {
-                        val courtRef = document.getDocumentReference("court")
-                        val startTime = document.getTimestamp("date")?.toDate()
-                        val duration = document.getLong("duration")
-
-                        courtRef?.get()?.addOnSuccessListener { courtDoc ->
-                            val courtName = courtDoc.getString("name") ?: "Unknown"
-                            // Format the day as needed (e.g., "dd MMM")
-                            val dayFormatted = SimpleDateFormat("dd MMM", Locale.getDefault()).format(startTime)
-                            // Format the start time as needed (e.g., "HH:mm")
-                            val startTimeFormatted = SimpleDateFormat("HH:mm", Locale.getDefault()).format(startTime)
-
-                            clubsAvailabilityList.add(
-                                ClubAvailability(
-                                    clubName = courtName,
-                                    day = dayFormatted,
-                                    startTimes = listOf(startTimeFormatted),
-                                    bookingId = document.id
-                                )
-                            )
-
-                            remainingCalls--
-
-                            // If it's the last call, update RecyclerView
-                            if (remainingCalls == 0) {
-                                updateRecyclerView(clubsAvailabilityList)
-                            }
-                        }?.addOnFailureListener {
-                            // Decrement the count on failure too
-                            remainingCalls--
-                        }
-                    }
-                }
-                .addOnFailureListener { e ->
-                    // Handle the failure, e.g., show a message to the user
-                    Log.e("AddMatchesFragment", "Error fetching bookings: ${e.message}", e)
-                }
-        }
-    }
     private fun loadBookedClubsAvailability() {
         val currentUser = AuthData.auth.currentUser
         val currentTime = Calendar.getInstance()
@@ -155,25 +94,6 @@ class AddMatchesFragment : Fragment() {
         recyclerView.adapter = clubsAdapter
     }
 
-    private fun generateTimeSlots(): List<String> {
-        val timeSlots = mutableListOf<String>()
-        val startTime = 9 // Startuur
-        val endTime = 17// Einduur
-
-        val timeFormat = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
-
-        val calendar = java.util.Calendar.getInstance()
-        calendar.set(java.util.Calendar.HOUR_OF_DAY, startTime)
-        calendar.set(java.util.Calendar.MINUTE, 0)
-
-        while (calendar.get(java.util.Calendar.HOUR_OF_DAY) < endTime) {
-            val timeSlot = timeFormat.format(calendar.time)
-            timeSlots.add(timeSlot)
-            calendar.add(java.util.Calendar.MINUTE, 30)
-        }
-
-        return timeSlots
-    }
 
     data class ClubAvailability(
         val clubName: String,

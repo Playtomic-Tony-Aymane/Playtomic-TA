@@ -2,9 +2,9 @@ package com.example.playtomictonyaymane.ui.tabs
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
+import com.example.playtomictonyaymane.ui.userprofile.UserProfileFragment
 
-class ViewPagerAdapter(fragmentManager: NotificationsFragment) : FragmentStateAdapter(fragmentManager) {
+class ViewPagerAdapter(fragmentManager: UserProfileFragment) : FragmentStateAdapter(fragmentManager) {
 
 
 
