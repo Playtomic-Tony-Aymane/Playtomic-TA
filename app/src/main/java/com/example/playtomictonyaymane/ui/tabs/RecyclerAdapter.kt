@@ -10,70 +10,47 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playtomictonyaymane.MatchData
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
 
-class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(private var matchesList: List<MatchData.Match>) :
+    RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private val kode = arrayOf("d116df5",
-        "36ffc75", "f5cfe78", "5b87628",
-        "db8d14e", "9913dc4", "e120f96",
-        "466251b")
-
-    private val kategori = arrayOf("Kekayaan", "Teknologi",
-        "Keluarga", "Bisnis",
-        "Keluarga", "Hutang",
-        "Teknologi", "Pidana")
-
-    private val isi = arrayOf("pertanyaan 9",
-        "pertanyaan 11", "pertanyaan 17", "test forum",
-        "pertanyaan 12", "pertanyaan 18", "pertanyaan 20",
-        "pertanyaan 21")
-
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        var itemKode: TextView
-        var itemKategori: TextView
-        var itemIsi: TextView
-
-        init {
-            itemKode = itemView.findViewById(R.id.kodePertanyaan)
-            itemKategori = itemView.findViewById(R.id.kategori)
-            itemIsi = itemView.findViewById(R.id.isiPertanyaan)
-
-            itemView.setOnClickListener {
-                var position: Int = getAdapterPosition()
-                val context = itemView.context
-                val intent = Intent(context, DetailPertanyaan::class.java).apply {
-                    putExtra("NUMBER", position)
-                    putExtra("CODE", itemKode.text)
-                    putExtra("CATEGORY", itemKategori.text)
-                    putExtra("CONTENT", itemIsi.text)
-                }
-                context.startActivity(intent)
-            }
-        }
-
-
-}
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        val v = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_recycler, viewGroup, false)
-        return ViewHolder(v)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_recycler, parent, false)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-
-        viewHolder.itemKode.text = kode[i]
-        viewHolder.itemKategori.text = kategori[i]
-        viewHolder.itemIsi.text = isi[i]
-
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(matchesList[position])
     }
 
     override fun getItemCount(): Int {
-        return kode.size
+        return matchesList.size
+    }
+
+    fun updateMatches(newMatches: List<MatchData.Match>) {
+        matchesList = newMatches
+        notifyDataSetChanged() // Notify the adapter to refresh the RecyclerView
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val codeTextView: TextView = itemView.findViewById(R.id.kodePertanyaan)
+        private val categoryTextView: TextView = itemView.findViewById(R.id.kategori)
+        private val contentTextView: TextView = itemView.findViewById(R.id.isiPertanyaan)
+
+        fun bind(match: MatchData.Match) {
+            codeTextView.text = match.getTitle()
+            categoryTextView.text = match.date
+            contentTextView.text = match.getDescription()
+
+            // Implement click listener if required
+            itemView.setOnClickListener {
+                // Actions to take place when a match is clicked
+            }
+        }
     }
 }
 

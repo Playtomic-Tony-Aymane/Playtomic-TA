@@ -3,6 +3,7 @@ package com.example.playtomictonyaymane.ui.OpenMatch
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -10,12 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.AuthData
 import com.example.playtomictonyaymane.R
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
+
 
 class AddMatchesFragment : Fragment() {
 
@@ -39,63 +38,12 @@ class AddMatchesFragment : Fragment() {
         return view
     }
 
-    private fun loadBookedClubsAvailability2() {
-        val clubsAvailabilityList = mutableListOf<ClubAvailability>()
-        val currentUser = AuthData.auth.currentUser
-        val currentTime = Calendar.getInstance()
-
-        if (currentUser != null) {
-            AuthData.db.collection("bookings")
-                .whereEqualTo("owner", AuthData.db.collection("users").document(currentUser.uid))
-                .whereGreaterThanOrEqualTo("date", currentTime.time)
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    // This counter will help us know when all async calls have returned
-                    var remainingCalls = querySnapshot.size()
-
-                    if (remainingCalls == 0) {
-                        updateRecyclerView(clubsAvailabilityList)
-                    }
-
-                    for (document in querySnapshot) {
-                        val courtRef = document.getDocumentReference("court")
-                        val startTime = document.getTimestamp("date")?.toDate()
-                        val duration = document.getLong("duration")
-
-                        courtRef?.get()?.addOnSuccessListener { courtDoc ->
-                            val courtName = courtDoc.getString("name") ?: "Unknown"
-                            // Format the day as needed (e.g., "dd MMM")
-                            val dayFormatted = SimpleDateFormat("dd MMM", Locale.getDefault()).format(startTime)
-                            // Format the start time as needed (e.g., "HH:mm")
-                            val startTimeFormatted = SimpleDateFormat("HH:mm", Locale.getDefault()).format(startTime)
-
-                            clubsAvailabilityList.add(
-                                ClubAvailability(
-                                    clubName = courtName,
-                                    day = dayFormatted,
-                                    startTimes = listOf(startTimeFormatted),
-                                    bookingId = document.id
-                                )
-                            )
-
-                            remainingCalls--
-
-                            // If it's the last call, update RecyclerView
-                            if (remainingCalls == 0) {
-                                updateRecyclerView(clubsAvailabilityList)
-                            }
-                        }?.addOnFailureListener {
-                            // Decrement the count on failure too
-                            remainingCalls--
-                        }
-                    }
-                }
-                .addOnFailureListener { e ->
-                    // Handle the failure, e.g., show a message to the user
-                    Log.e("AddMatchesFragment", "Error fetching bookings: ${e.message}", e)
-                }
-        }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        //do something with your id
+        return super.onOptionsItemSelected(item)
     }
+
     private fun loadBookedClubsAvailability() {
         val currentUser = AuthData.auth.currentUser
         val currentTime = Calendar.getInstance()
@@ -180,13 +128,5 @@ class AddMatchesFragment : Fragment() {
         val day: String, // This could represent the date of the booking
         val startTimes: List<String>, // This would be single-item lists containing just the start time of the booking
         val bookingId: String
-        // Additional fields can be added as needed to represent details of each booking
     )
-
-//    data class ClubAvailability(
-//        val clubName: String,
-//        val day: String,
-//        val timeSlot: List<String> ,
-//        // Andere gegevens zoals beschikbaarheidstijden, etc.
-//    )
 }
