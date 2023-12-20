@@ -8,12 +8,12 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playtomictonyaymane.MatchData
 import com.example.playtomictonyaymane.R
+import com.example.playtomictonyaymane.ui.OpenMatch.MyMatchesAdapter
 import com.example.playtomictonyaymane.ui.play.PlayFragment
 
 class ActivitiesFragment: Fragment(){
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,13 +24,17 @@ class ActivitiesFragment: Fragment(){
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
 
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        //val recyclerView: RecyclerView = requireView().findViewById(R.id.recycler_view)
+        //recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        val adapter = RecyclerAdapter()
-        recyclerView.adapter = adapter
+        val recyclerViewMyMatches: RecyclerView = requireView().findViewById(R.id.recycler_view)
+        val matchesAdapter = RecyclerAdapter(listOf())
+        recyclerViewMyMatches.adapter = matchesAdapter
+        recyclerViewMyMatches.layoutManager = LinearLayoutManager(requireContext())
 
+        // Fetch and display the user's matches
+        MatchData.loadRelevantMatches(recyclerViewMyMatches)
 
         view?.findViewById<Button>(R.id.btnAddActivity)?.setOnClickListener {
             val playFragment = PlayFragment()
