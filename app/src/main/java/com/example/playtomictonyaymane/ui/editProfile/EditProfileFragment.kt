@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -84,6 +83,7 @@ class EditProfileFragment: Fragment() {
                     userData["location"] = binding.editTextLocation.text.toString()
                     userData["prefrence"] = binding.editTextPrefrence.text.toString()
 
+                    syncFromUserData()
                     saveProfile()
 
                 }
@@ -115,6 +115,7 @@ class EditProfileFragment: Fragment() {
                 userData["location"] = binding.editTextLocation.text.toString()
                 userData["prefrence"] = binding.editTextPrefrence.text.toString()
 
+                syncFromUserData()
                 saveProfile()
             }
             //findNavController().navigateUp()

@@ -34,7 +34,7 @@ class UserProfileViewModel : ViewModel() {
         _firstName.value = userData["firstName"] ?: ""
         _lastName.value = userData["lastName"] ?: ""
         _location.value = userData["location"] ?: ""
-        _preference.value = userData["preference"] ?: ""
+        _preference.value = userData["prefrence"] ?: ""
     }
     // Sync fields
     fun syncFromFields() {
