@@ -3,6 +3,7 @@ package com.example.playtomictonyaymane.ui.OpenMatch
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.example.playtomictonyaymane.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
 
 class AddMatchesFragment : Fragment() {
 
@@ -100,13 +102,5 @@ class AddMatchesFragment : Fragment() {
         val day: String, // This could represent the date of the booking
         val startTimes: List<String>, // This would be single-item lists containing just the start time of the booking
         val bookingId: String
-        // Additional fields can be added as needed to represent details of each booking
     )
-
-//    data class ClubAvailability(
-//        val clubName: String,
-//        val day: String,
-//        val timeSlot: List<String> ,
-//        // Andere gegevens zoals beschikbaarheidstijden, etc.
-//    )
 }

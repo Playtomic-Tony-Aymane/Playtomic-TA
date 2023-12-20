@@ -24,10 +24,6 @@ class UserProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-
-    val userProfileViewModel: UserProfileViewModel by activityViewModels()
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,7 +45,14 @@ class UserProfileFragment : Fragment() {
 
 
         editProfileButton.setOnClickListener {
+<<<<<<< HEAD:app/src/main/java/com/example/playtomictonyaymane/ui/userprofile/UserProfileFragment.kt
             findNavController().navigate(R.id.editProfileFragment)
+=======
+            val navHostFragment =
+                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.action_navigation_user_to_editProfileFragment)
+>>>>>>> master:app/src/main/java/com/example/playtomictonyaymane/ui/notifications/NotificationsFragment.kt
         }
 
         signoutButton.setOnClickListener {
@@ -68,12 +71,22 @@ class UserProfileFragment : Fragment() {
         }.attach()
 
 
-
-
-
-        binding.userName.text = "${userProfileViewModel.firstName} ${userProfileViewModel.lastName}"
-        binding.userLocation.text = userProfileViewModel.location
-        binding.prefrence.text = userProfileViewModel.prefrence
+        val userProfileViewModel = activityViewModels<NotificationsViewModel>().value
+        // Observe LiveData fields and update UI accordingly
+        userProfileViewModel.firstName.observe(viewLifecycleOwner) { firstName ->
+            binding.userName.text = "$firstName ${userProfileViewModel.lastName.value}"
+        }
+        userProfileViewModel.lastName.observe(viewLifecycleOwner) { lastName ->
+            binding.userName.text = "${userProfileViewModel.firstName.value} $lastName"
+        }
+        userProfileViewModel.location.observe(viewLifecycleOwner) { location ->
+            binding.userLocation.text = location
+        }
+        userProfileViewModel.preference.observe(viewLifecycleOwner) { preference ->
+            binding.prefrence.text = preference
+        }
+        // Load the profile which will update LiveData and trigger UI changes
+        userProfileViewModel.loadProfile()
     }
 
 

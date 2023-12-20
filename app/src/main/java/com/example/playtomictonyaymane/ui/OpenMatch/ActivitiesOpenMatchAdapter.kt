@@ -10,13 +10,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.AuthData
+import com.example.playtomictonyaymane.MatchData
 import com.example.playtomictonyaymane.R
 import com.google.firebase.firestore.DocumentReference
 
 interface MatchUpdateListener {
     fun onMatchUpdated(matchId: String)
 }
-class ActivitiesOpenMatchAdapter (private var matchesList: List<MyMatchesFragment.Match>, private val listener: MatchUpdateListener) : RecyclerView.Adapter<ActivitiesOpenMatchAdapter.MatchViewHolder>() {
+class ActivitiesOpenMatchAdapter (private var matchesList: List<MatchData.Match>, private val listener: MatchUpdateListener) : RecyclerView.Adapter<ActivitiesOpenMatchAdapter.MatchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.activities_card, parent, false)
@@ -32,7 +33,7 @@ class ActivitiesOpenMatchAdapter (private var matchesList: List<MyMatchesFragmen
         return matchesList.size
     }
 
-    fun updateMatches(newMatches: List<MyMatchesFragment.Match>) {
+    fun updateMatches(newMatches: List<MatchData.Match>) {
         this.matchesList = newMatches.sortedBy { match -> match.date }
         notifyDataSetChanged() // Notify the adapter to refresh the RecyclerView
     }
@@ -46,7 +47,7 @@ class ActivitiesOpenMatchAdapter (private var matchesList: List<MyMatchesFragmen
         // Hier alle andere views in de kaart toevoegen
 
         @SuppressLint("NotifyDataSetChanged")
-        fun bind(match: MyMatchesFragment.Match) {
+        fun bind(match: MatchData.Match) {
             dateTextView.text = "Datum: ${match.date}"
             fieldNameTextView.text = "Veld: ${match.courtName}"
             var text: String = ""
@@ -88,9 +89,9 @@ class ActivitiesOpenMatchAdapter (private var matchesList: List<MyMatchesFragmen
             }
         }
 
-        private fun showConfirmationDialog(match: MyMatchesFragment.Match, matchType: String, matchGender: String, notifyDataSetChanged: () -> Unit) {
+        private fun showConfirmationDialog(match: MatchData.Match, matchType: String, matchGender: String, notifyDataSetChanged: () -> Unit) {
             val builder = AlertDialog.Builder(itemView.context)
-            builder.setTitle("Participate in ${match.matchType} padel for ")
+            builder.setTitle("Participate in ${match.matchType} padel hosted by ${match.ownerName}?")
             builder.setPositiveButton("Yes") { dialog, _ ->
                 // Retrieve the current user's document reference
                 val currentUserRef = AuthData.auth.currentUser?.let { user ->

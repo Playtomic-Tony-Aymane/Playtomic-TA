@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playtomictonyaymane.MatchData
 import com.example.playtomictonyaymane.R
 
-class MyMatchesAdapter (private var myMatchesList: List<MyMatchesFragment.Match>) :
+class MyMatchesAdapter (private var myMatchesList: List<MatchData.Match>) :
     RecyclerView.Adapter<MyMatchesAdapter.MyMatchesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyMatchesViewHolder {
@@ -26,7 +27,7 @@ class MyMatchesAdapter (private var myMatchesList: List<MyMatchesFragment.Match>
         return myMatchesList.size
     }
 
-    fun updateMatches(newMatches: List<MyMatchesFragment.Match>) {
+    fun updateMatches(newMatches: List<MatchData.Match>) {
         this.myMatchesList = newMatches
         notifyDataSetChanged() // Notify the adapter to refresh the RecyclerView
     }
@@ -35,19 +36,8 @@ class MyMatchesAdapter (private var myMatchesList: List<MyMatchesFragment.Match>
         private val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         private val dateTextView: TextView = itemView.findViewById(R.id.dateTextView)
 
-        fun bind(match: MyMatchesFragment.Match) {
-            var text: String = ""
-            text += when (match.matchType) {
-                "friendly" -> "Friendly "
-                "competitive" -> "Competitive "
-                else -> ""
-            }
-            text += when (match.matchGender) {
-                "men" -> "♂ "
-                "women" -> "♀ "
-                else -> "♂♀ "
-            }
-            text += match.courtName
+        fun bind(match: MatchData.Match) {
+            val text = match.getTitle()
 
             titleTextView.text = text
             dateTextView.text = match.date
