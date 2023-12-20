@@ -1,4 +1,4 @@
-package com.example.playtomictonyaymane.ui.notifications
+package com.example.playtomictonyaymane.ui.userprofile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.playtomictonyaymane.MainActivity
 import com.example.playtomictonyaymane.R
@@ -16,7 +17,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class NotificationsFragment : Fragment() {
+class UserProfileFragment : Fragment() {
 
     private var _binding: FragmentUserBinding? = null
 
@@ -44,10 +45,14 @@ class NotificationsFragment : Fragment() {
 
 
         editProfileButton.setOnClickListener {
+<<<<<<< HEAD:app/src/main/java/com/example/playtomictonyaymane/ui/userprofile/UserProfileFragment.kt
+            findNavController().navigate(R.id.editProfileFragment)
+=======
             val navHostFragment =
                 requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
             val navController = navHostFragment.navController
             navController.navigate(R.id.action_navigation_user_to_editProfileFragment)
+>>>>>>> master:app/src/main/java/com/example/playtomictonyaymane/ui/notifications/NotificationsFragment.kt
         }
 
         signoutButton.setOnClickListener {

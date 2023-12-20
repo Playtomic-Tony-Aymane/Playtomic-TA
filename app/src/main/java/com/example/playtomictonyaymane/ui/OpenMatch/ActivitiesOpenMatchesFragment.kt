@@ -15,6 +15,9 @@ import com.example.playtomictonyaymane.databinding.FragmentOpenMatchActivitiesBi
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class ActivitiesOpenMatchesFragment :Fragment(){

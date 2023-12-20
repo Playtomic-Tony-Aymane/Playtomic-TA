@@ -1,10 +1,9 @@
-package com.example.playtomictonyaymane.ui.dashboard
+package com.example.playtomictonyaymane.ui.searchcourt_discovery
 
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -17,11 +16,7 @@ import android.widget.Button
 import android.widget.TextView
 import okhttp3.OkHttpClient
 import java.net.URLEncoder
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -47,7 +42,7 @@ import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.OverlayItem
 import java.io.IOException
 
-class DashboardFragment : Fragment()  {
+class SearchCourtFragment : Fragment()  {
 
     private lateinit var searchField: TextView
     private lateinit var searchButton: Button
@@ -65,7 +60,7 @@ class DashboardFragment : Fragment()  {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(this).get(SearchCourtViewModel::class.java)
 
         _binding = FragmentDiscoveryBinding.inflate(inflater, container, false)
         val root: View = binding.root

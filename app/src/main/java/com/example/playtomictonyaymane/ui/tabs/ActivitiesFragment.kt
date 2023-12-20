@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.MatchData
@@ -37,13 +38,10 @@ class ActivitiesFragment: Fragment(){
         MatchData.loadRelevantMatches(recyclerViewMyMatches)
 
         view?.findViewById<Button>(R.id.btnAddActivity)?.setOnClickListener {
-            val playFragment = PlayFragment()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-
-            // Vervang het huidige fragment door PlayFragment
-            transaction.replace(R.id.container, playFragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            val navHostFragment =
+                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+            val navController = navHostFragment.navController
+            navController.navigate(R.id.navigation_play)
 
 
         }

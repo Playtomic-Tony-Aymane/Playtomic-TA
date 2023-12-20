@@ -10,14 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.playtomictonyaymane.AuthActivity
-import com.example.playtomictonyaymane.AuthData
 import com.example.playtomictonyaymane.AuthData.auth
-import com.example.playtomictonyaymane.databinding.FragmentAuthEmailBinding
 import com.example.playtomictonyaymane.databinding.FragmentAuthPasswordBinding
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 
 class PasswordFragment(val email: String, val exists: Boolean) : Fragment() {

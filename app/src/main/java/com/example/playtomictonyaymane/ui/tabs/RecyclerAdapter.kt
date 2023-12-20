@@ -1,18 +1,13 @@
 package com.example.playtomictonyaymane.ui.tabs
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.MatchData
 import com.example.playtomictonyaymane.R
-import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
 
 class RecyclerAdapter(private var matchesList: List<MatchData.Match>) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {

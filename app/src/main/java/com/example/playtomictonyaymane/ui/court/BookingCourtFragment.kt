@@ -22,8 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playtomictonyaymane.AuthData
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentCourtbookingBinding
-import com.example.playtomictonyaymane.ui.dashboard.DashboardFragment
-import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
+import com.example.playtomictonyaymane.ui.searchcourt_discovery.SearchCourtFragment
 import com.example.playtomictonyaymane.ui.tabs.TimeSlotAdapter
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
@@ -130,7 +129,7 @@ class BookingCourtFragment:Fragment() {
             saveBookingToFirestore(year, month, day, selectedTimeSlot, selectedCourtRef) { success: Boolean ->
                 if (success) {
                     findNavController().navigateUp()
-                    val dashboard = DashboardFragment()
+                    val dashboard = SearchCourtFragment()
                     val transaction = requireActivity().supportFragmentManager.beginTransaction()
 
                     // Vervang het huidige fragment door PlayFragment
@@ -148,32 +147,7 @@ class BookingCourtFragment:Fragment() {
         }
     }
 
-    private fun timeSlotWithinBookedRange(slot: Calendar, bookingStart: Date, bookingEnd: Date): Boolean {
-        val bookingStartCal = Calendar.getInstance()
-        val bookingEndCal = Calendar.getInstance()
-        bookingStartCal.time = bookingStart
-        bookingEndCal.time = bookingEnd
 
-        // Normalize the year, month, and date
-        bookingStartCal.set(Calendar.MILLISECOND, 0)
-        bookingEndCal.set(Calendar.MILLISECOND, 0)
-        slot.set(Calendar.YEAR, bookingStartCal.get(Calendar.YEAR))
-        slot.set(Calendar.MONTH, bookingStartCal.get(Calendar.MONTH))
-        slot.set(Calendar.DAY_OF_MONTH, bookingStartCal.get(Calendar.DAY_OF_MONTH))
-        slot.set(Calendar.MILLISECOND, 0)
-
-        val r1 = slot.time == bookingStartCal.time
-        val r2 = slot.time.after(bookingStartCal.time) || slot.time.equals(bookingStartCal.time)
-        val r3 = slot.time.before(bookingEndCal.time) && !slot.time.equals(bookingEndCal.time)
-
-        val a1 = r1
-        val a2 = r2 && r3
-
-        //Log.d("timeslot", "${slot.time} $r1 $r2 $r3")
-
-        // Compare only the times, ignore the date
-        return a1 || a2
-    }
 
     private fun saveBookingToFirestore(year: Int, month: Int, day: Int, selectedTimeSlot: String?, courtRef: DocumentReference, onFinish: (Boolean) -> Unit) : Boolean {
         if (selectedTimeSlot == null) {

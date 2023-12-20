@@ -19,8 +19,6 @@ import java.util.Locale
 class AddMatchesFragment : Fragment() {
 
     lateinit var recyclerView: RecyclerView
-    lateinit var clubsAdapter: FieldsAdapter
-    var clubsAvailabilityList = mutableListOf<ClubAvailability>()
 
 
     override fun onCreateView(
@@ -38,11 +36,6 @@ class AddMatchesFragment : Fragment() {
         return view
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        //do something with your id
-        return super.onOptionsItemSelected(item)
-    }
 
     private fun loadBookedClubsAvailability() {
         val currentUser = AuthData.auth.currentUser
@@ -103,25 +96,6 @@ class AddMatchesFragment : Fragment() {
         recyclerView.adapter = clubsAdapter
     }
 
-    private fun generateTimeSlots(): List<String> {
-        val timeSlots = mutableListOf<String>()
-        val startTime = 9 // Startuur
-        val endTime = 17// Einduur
-
-        val timeFormat = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
-
-        val calendar = java.util.Calendar.getInstance()
-        calendar.set(java.util.Calendar.HOUR_OF_DAY, startTime)
-        calendar.set(java.util.Calendar.MINUTE, 0)
-
-        while (calendar.get(java.util.Calendar.HOUR_OF_DAY) < endTime) {
-            val timeSlot = timeFormat.format(calendar.time)
-            timeSlots.add(timeSlot)
-            calendar.add(java.util.Calendar.MINUTE, 30)
-        }
-
-        return timeSlots
-    }
 
     data class ClubAvailability(
         val clubName: String,

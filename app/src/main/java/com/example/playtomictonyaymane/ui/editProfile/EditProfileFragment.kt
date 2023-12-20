@@ -22,8 +22,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentEditprofileBinding
-import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
-import com.example.playtomictonyaymane.ui.notifications.NotificationsViewModel
+import com.example.playtomictonyaymane.ui.userprofile.UserProfileFragment
+import com.example.playtomictonyaymane.ui.userprofile.UserProfileViewModel
 import java.io.File
 import java.io.FileOutputStream
 
@@ -75,7 +75,7 @@ class EditProfileFragment: Fragment() {
             title = "Profile"
             setDisplayHomeAsUpEnabled(true)
 
-            val userProfileViewModel: NotificationsViewModel by activityViewModels()
+            val userProfileViewModel: UserProfileViewModel by activityViewModels()
 
             binding.buttonSaveProfile.setOnClickListener{
                 userProfileViewModel.apply {
@@ -88,7 +88,7 @@ class EditProfileFragment: Fragment() {
 
                 }
                 findNavController().navigateUp()
-                val userProdile = NotificationsFragment()
+                val userProdile = UserProfileFragment()
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.container, userProdile)
                 transaction.addToBackStack("UserProfile")
@@ -107,7 +107,7 @@ class EditProfileFragment: Fragment() {
             checkGalleryPermissionAndOpen()
         }
 
-        val userProfileViewModel: NotificationsViewModel by activityViewModels()
+        val userProfileViewModel: UserProfileViewModel by activityViewModels()
         binding.buttonSaveProfile.setOnClickListener{
             userProfileViewModel.apply {
                 userData["firstName"] = binding.editTextFirstName.text.toString()
