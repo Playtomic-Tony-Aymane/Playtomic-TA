@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -19,8 +18,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentEditprofileBinding
 import com.example.playtomictonyaymane.ui.notifications.NotificationsFragment
@@ -47,9 +46,6 @@ class EditProfileFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(EditViewModel::class.java)
-
         _binding = FragmentEditprofileBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -83,10 +79,12 @@ class EditProfileFragment: Fragment() {
 
             binding.buttonSaveProfile.setOnClickListener{
                 userProfileViewModel.apply {
-                     firstName = binding.editTextFirstName.text.toString()
-                     lastName = binding.editTextLastName.text.toString()
-                     location = binding.editTextLocation.text.toString()
-                     prefrence = binding.editTextPrefrence.text.toString()
+                    userData["firstName"] = binding.editTextFirstName.text.toString()
+                    userData["lastName"] = binding.editTextLastName.text.toString()
+                    userData["location"] = binding.editTextLocation.text.toString()
+                    userData["prefrence"] = binding.editTextPrefrence.text.toString()
+
+                    saveProfile()
 
                 }
                 findNavController().navigateUp()
@@ -101,7 +99,7 @@ class EditProfileFragment: Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             val navHostFragment =
-                requireActivity().supportFragmentManager.findFragmentById(com.example.playtomictonyaymane.R.id.nav_host_fragment_activity_main) as NavHostFragment
+                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
             val navController = navHostFragment.navController
             navController.popBackStack()
         }
@@ -112,10 +110,10 @@ class EditProfileFragment: Fragment() {
         val userProfileViewModel: NotificationsViewModel by activityViewModels()
         binding.buttonSaveProfile.setOnClickListener{
             userProfileViewModel.apply {
-                firstName = binding.editTextFirstName.text.toString()
-                lastName = binding.editTextLastName.text.toString()
-                location = binding.editTextLocation.text.toString()
-                prefrence = binding.editTextPrefrence.text.toString()
+                userData["firstName"] = binding.editTextFirstName.text.toString()
+                userData["lastName"] = binding.editTextLastName.text.toString()
+                userData["location"] = binding.editTextLocation.text.toString()
+                userData["prefrence"] = binding.editTextPrefrence.text.toString()
 
                 saveProfile()
             }
@@ -130,10 +128,10 @@ class EditProfileFragment: Fragment() {
         }
 
         // bindings
-        binding.editTextFirstName.setText(userProfileViewModel.firstName)
-        binding.editTextLastName.setText(userProfileViewModel.lastName)
-        binding.editTextLocation.setText(userProfileViewModel.location)
-        binding.editTextPrefrence.setText(userProfileViewModel.prefrence)
+        binding.editTextFirstName.setText(userProfileViewModel.firstName.value)
+        binding.editTextLastName.setText(userProfileViewModel.lastName.value)
+        binding.editTextLocation.setText(userProfileViewModel.location.value)
+        binding.editTextPrefrence.setText(userProfileViewModel.preference.value)
     }
     
     private fun checkGalleryPermissionAndOpen() {

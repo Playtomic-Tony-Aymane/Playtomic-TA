@@ -11,10 +11,16 @@ class NotificationsViewModel : ViewModel() {
         value = "Profile"
     }
     val text: LiveData<String> = _text
-    var firstName: String = ""
-    var lastName: String = ""
-    var location : String = ""
-    var prefrence: String = ""
+
+    // Convert fields into LiveData so that the UI can observe changes
+    private val _firstName = MutableLiveData<String>()
+    val firstName: LiveData<String> = _firstName
+    private val _lastName = MutableLiveData<String>()
+    val lastName: LiveData<String> = _lastName
+    private val _location = MutableLiveData<String>()
+    val location: LiveData<String> = _location
+    private val _preference = MutableLiveData<String>()
+    val preference: LiveData<String> = _preference
 
     var userData: HashMap<String, String?> = hashMapOf()
         set(value) {
@@ -25,17 +31,17 @@ class NotificationsViewModel : ViewModel() {
 
     // Set fields using userData
     fun syncFromUserData() {
-        firstName = userData["firstName"] ?: ""
-        lastName = userData["lastName"] ?: ""
-        location = userData["location"] ?: ""
-        prefrence = userData["prefrence"] ?: ""
+        _firstName.value = userData["firstName"] ?: ""
+        _lastName.value = userData["lastName"] ?: ""
+        _location.value = userData["location"] ?: ""
+        _preference.value = userData["preference"] ?: ""
     }
     // Sync fields
     fun syncFromFields() {
-        userData["firstName"] = firstName
-        userData["lastName"] = lastName
-        userData["location"] = location
-        userData["prefrence"] = prefrence
+        userData["firstName"] = firstName.value
+        userData["lastName"] = lastName.value
+        userData["location"] = location.value
+        userData["prefrence"] = preference.value
     }
 
     fun saveProfile() {
@@ -46,6 +52,7 @@ class NotificationsViewModel : ViewModel() {
     fun loadProfile(userDataValid: ((Boolean) -> Unit)? = null) {
         AuthData.loadFromFireStore({ data ->
             this.userData = data
+            syncFromUserData()
             val valid = userData.values.none { it.isNullOrBlank() }
             userDataValid?.invoke(valid)
         }, {

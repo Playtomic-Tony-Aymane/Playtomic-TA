@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.playtomictonyaymane.MainActivity
 import com.example.playtomictonyaymane.R
 import com.example.playtomictonyaymane.databinding.FragmentUserBinding
-import com.example.playtomictonyaymane.ui.editProfile.EditProfileFragment
 import com.example.playtomictonyaymane.ui.tabs.ViewPagerAdapter
-//import com.example.playtomictonyaymane.ui.tabs.ViewPagerAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -24,10 +21,6 @@ class NotificationsFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
 
     private val binding get() = _binding!!
-
-
-
-    val userProfileViewModel: NotificationsViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -55,13 +48,6 @@ class NotificationsFragment : Fragment() {
                 requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
             val navController = navHostFragment.navController
             navController.navigate(R.id.action_navigation_user_to_editProfileFragment)
-
-            /*val Editfragmet = EditProfileFragment()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, Editfragmet)
-             transaction.addToBackStack("UserProfile")
-              transaction.commit()*/
-
         }
 
         signoutButton.setOnClickListener {
@@ -79,16 +65,23 @@ class NotificationsFragment : Fragment() {
             }
         }.attach()
 
-        val userProfileViewModel = ViewModelProvider(this)[NotificationsViewModel::class.java]
+
+        val userProfileViewModel = activityViewModels<NotificationsViewModel>().value
+        // Observe LiveData fields and update UI accordingly
+        userProfileViewModel.firstName.observe(viewLifecycleOwner) { firstName ->
+            binding.userName.text = "$firstName ${userProfileViewModel.lastName.value}"
+        }
+        userProfileViewModel.lastName.observe(viewLifecycleOwner) { lastName ->
+            binding.userName.text = "${userProfileViewModel.firstName.value} $lastName"
+        }
+        userProfileViewModel.location.observe(viewLifecycleOwner) { location ->
+            binding.userLocation.text = location
+        }
+        userProfileViewModel.preference.observe(viewLifecycleOwner) { preference ->
+            binding.prefrence.text = preference
+        }
+        // Load the profile which will update LiveData and trigger UI changes
         userProfileViewModel.loadProfile()
-
-
-
-
-
-        binding.userName.text = "${userProfileViewModel.firstName} ${userProfileViewModel.lastName}"
-        binding.userLocation.text = userProfileViewModel.location
-        binding.prefrence.text = userProfileViewModel.prefrence
     }
 
 
